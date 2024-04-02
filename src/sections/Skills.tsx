@@ -1,55 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { client } from "../sanity";
 
-const skills = [
-  {
-    img: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original-wordmark.svg",
-    title: "HTML",
-  },
-  {
-    img: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original-wordmark.svg",
-    title: "CSS",
-  },
-  {
-    img: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg",
-    title: "JS",
-  },
-  {
-    img: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-plain-wordmark.svg",
-    title: "Tailwind CSS",
-  },
-  {
-    img: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original-wordmark.svg",
-    title: "Node JS",
-  },
-  {
-    img: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original-wordmark.svg",
-
-    title: "Express JS",
-  },
-  {
-    img: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original-wordmark.svg",
-    title: "React JS",
-  },
-  {
-    img: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original-wordmark.svg",
-    title: "MongoDB",
-  },
-];
+export interface Skill {
+  image?: string;
+  title: String;
+}
 
 function Skills() {
+  const [skills, setSkills] = useState<Skill[] | []>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result: Skill[] = await client.fetch(
+          `*[_type=="skill"] | order(_createdAt asc) {
+            title, image
+          }`
+        );
+        setSkills(result);
+      } catch (error) {
+        console.error("Failed to fetch hero data", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
-    <section>
+    <section id="skills" className="pt-8 dark:bg-black dark:text-white">
       <h1 className="text-2xl font-bold text-center">Tech Stack</h1>
-      <main className="flex  p-10 gap-10 justify-center">
-        {skills.map((skill, i) => (
+      <main className="flex py-20 px-4 sm:px-20 gap-2 sm:gap-16 flex-nowrap sm:justify-center sm:flex-wrap overflow-auto">
+        {skills?.map((skill, i) => (
           <div
-            className={`skill w-32 ${
+            className={`skill min-w-32 ${
               i % 2 === 0
-                ? "bg-black shadow-2xl shadow-black"
-                : "bg-gray-300 shadow-gray-300"
+                ? "bg-black shadow-lg shadow-gray-500"
+                : "bg-gray-300 shadow-lg shadow-gray-300"
             } rounded-md p-4 hover:scale-105 cursor-pointer`}
           >
-            <img src={skill.img} alt="" />
+            <img src={skill.image} alt="" />
             <p
               className={`${
                 i % 2 === 0 ? "text-white" : "text-black"
