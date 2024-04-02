@@ -7,8 +7,8 @@ export interface ProjectProps {
   title: string;
   summary: string;
   image: string; // Assuming image is a URL for simplicity
-  github?: string; // Optional string for GitHub URL
-  linkedin?: string; // Optional string for LinkedIn URL
+  linkToGitHub?: string; // Optional string for GitHub URL
+  linkToBuild?: string; // Optional string for LinkedIn URL
   technologies: Skill[]; // Array of technology strings
 }
 
@@ -47,8 +47,8 @@ function Projects() {
             title={project.title}
             summary={project.summary}
             image={project.image}
-            github={project.github}
-            linkedin={project.linkedin}
+            linkToBuild={project.linkToBuild}
+            linkToGitHub={project.linkToGitHub}
             technologies={project.technologies}
           />
         ))}

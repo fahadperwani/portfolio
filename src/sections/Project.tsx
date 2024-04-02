@@ -7,10 +7,11 @@ function Project({
   title,
   summary,
   image,
-  github,
-  linkedin,
+  linkToGitHub,
+  linkToBuild,
   technologies,
 }: ProjectProps) {
+  console.log(linkToBuild);
   return (
     <div className="group h-[400px] lg:w-[300px] w-full rounded-lg text-gray-300 relative overflow-hidden p-3.5 lg:hover:w-[90%] transition-all duration-200 z-10">
       <div
@@ -27,11 +28,15 @@ function Project({
           <li className="list-disc ml-8">{technology.title}</li>
         ))}
       </ul>
-      <div className="absolute right-2 bottom-2 group-hover:bottom-4 hover:right-6">
-        <a href="github.com" className="mr-2">
+      <div className="absolute right-3 bottom-3  ">
+        <a
+          href={linkToGitHub}
+          target="_blank"
+          className="mr-2 z-10 cursor-pointer"
+        >
           <FaGithub size={25} className="inline-block" />
         </a>
-        <a href="github.com">
+        <a href={linkToBuild} target="_blank" className="z-10 cursor-pointer">
           <HiExternalLink size={25} className="inline-block" />
         </a>
       </div>
